@@ -24,6 +24,7 @@ public class PathHtmlSingleton {
     private String registration;
     private String bottom;
     private String login;
+    private String create;
 
     private static PathHtmlSingleton ourInstance = new PathHtmlSingleton();
 
@@ -42,6 +43,14 @@ public class PathHtmlSingleton {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getCrgits statuseate() {
+        return create;
+    }
+
+    public void setCreate(String create) {
+        this.create = getPartialHtml(create);
     }
 
     public String getTop() {

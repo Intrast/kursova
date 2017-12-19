@@ -38,6 +38,7 @@ public class ListServlet extends HttpServlet {
 
         switch (request.getPathInfo()) {
             case "/all-list":
+                out.write("<a class=\"btn btn-default\" href=\"/list/create\" role=\"button\">Новий список</a>");
                 List<AllList> list = listDao.getListByUserId(user.getId());
                 out.write("<H1>List Note!</H1>");
                 listView.outAllList(out, list);
@@ -49,6 +50,10 @@ public class ListServlet extends HttpServlet {
             case  "/edit":
                 AllList allList = listDao.getListsById(Long.parseLong(request.getParameter("id")));
                 listView.outList(out, allList);
+                break;
+            case "/create":
+                out.write("dfasdgadfg");
+                listView.outCreated(out);
                 break;
         }
     }

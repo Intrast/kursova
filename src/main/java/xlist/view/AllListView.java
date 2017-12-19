@@ -3,7 +3,9 @@ package xlist.view;
 
 
 import xlist.models.AllList;
+import xlist.models.User;
 
+import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +22,16 @@ public class AllListView {
          */
 
 
+    private PathHtmlSingleton pathHtmlSingleton;
+    //
+    public AllListView() {
+        pathHtmlSingleton = PathHtmlSingleton.getInstance();
+    }
 
+        public  void  outCreated(PrintWriter out)
+        {
+            out.print(pathHtmlSingleton.getCreate());
+        }
         public void outAllList(PrintWriter out, List<AllList> lists){
             String listsStr = lists.stream().map(l -> {
                 return "<div class=\"col-xs-12 col-md-4\" >\n" +
