@@ -45,7 +45,7 @@ public class PathHtmlSingleton {
         this.path = path;
     }
 
-    public String getCrgits statuseate() {
+    public String getCreate() {
         return create;
     }
 

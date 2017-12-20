@@ -4,10 +4,9 @@ package xlist.dao;
 
 import xlist.models.AllList;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,5 +73,28 @@ import java.util.List;
             }
             return null;
         }
+
+
+        @Override
+       public AllList createList(String name, String comment, Long user_id)
+        {
+            DataSource dataSource = new DataSource();
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+            LocalDate localDate = LocalDate.now();
+            String data = dtf.format(localDate); //2016/11/16
+            PreparedStatement stmt = null;
+            try (Connection con = dataSource.createConnection()) {
+                stmt = con.prepareStatement("INSERT INTO list(list.name,list.comment,list.user_id," +
+                        "list.date)" +
+                        " VALUE ('" + name + "','" + comment + "','" + user_id + "','"
+                        + data + "');");
+                stmt.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+
     }
 

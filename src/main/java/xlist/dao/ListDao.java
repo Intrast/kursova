@@ -13,6 +13,10 @@ public interface ListDao {
         List<AllList> getListByUserId(long id);
 
         AllList getListsById(long id);
+
+
+
+        AllList createList(String name, String comment, Long user_id);
     }
 
 

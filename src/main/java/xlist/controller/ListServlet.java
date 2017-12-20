@@ -2,9 +2,12 @@ package xlist.controller;
 
 import xlist.dao.ListDao;
 import xlist.dao.ListDaoImpl;
+import xlist.dao.TaskDaoImpl;
+import xlist.dao.UserDaoImpl;
 import xlist.models.AllList;
 import xlist.models.User;
 import xlist.view.AllListView;
+import xlist.view.CreatedView;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +27,25 @@ import java.util.logging.Logger;
 public class ListServlet extends HttpServlet {
     private static Logger log = Logger.getLogger(ListServlet.class.getName());
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+
+        switch (request.getPathInfo()) {
+            case "/create":
+                ListDaoImpl listDao = new ListDaoImpl();
+                TaskDaoImpl taskDao = new TaskDaoImpl();
+                String name = new String(request.getParameter("name").getBytes("iso-8859-1"),"UTF-8");
+                String comment = new String(request.getParameter("comments").getBytes("iso-8859-1"),"UTF-8");
+                String task = new String(request.getParameter("task").getBytes("iso-8859-1"),"UTF-8");
+                Long user_id = user.getId();
+                listDao.createList(name,comment,user_id);
+                taskDao.createTask(task);
+                response.sendRedirect("/list/all-list");
+                break;
+        }
+
 
     }
 
@@ -34,6 +56,7 @@ public class ListServlet extends HttpServlet {
         User user = (User) session.getAttribute("user");
         ListDao listDao = new ListDaoImpl();
         AllListView listView = new AllListView();
+        CreatedView createdView = new CreatedView();
 
 
         switch (request.getPathInfo()) {
@@ -52,8 +75,7 @@ public class ListServlet extends HttpServlet {
                 listView.outList(out, allList);
                 break;
             case "/create":
-                out.write("dfasdgadfg");
-                listView.outCreated(out);
+                createdView.outCreated(out);
                 break;
         }
     }

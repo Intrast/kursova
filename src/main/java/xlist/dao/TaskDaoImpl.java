@@ -1,17 +1,14 @@
-/*package xlist.dao;
+package xlist.dao;
 
 import xlist.models.Task;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskDaoImpl {
+public class TaskDaoImpl implements TaskDao {
 
-    public List<Task> getTaskByListId(long id) {
+ /*  public List<Task> getTaskByListId(long id) {
         //створює об'єкт для завантаження драйвера
         DataSource dataSource = new DataSource();
         //Контейнер для заміток
@@ -64,7 +61,22 @@ public class TaskDaoImpl {
             e.printStackTrace();
         }
         return null;
+    }*/
+
+@Override
+    public Task createTask(String task)
+    {
+        DataSource dataSource = new DataSource();
+        PreparedStatement stmt = null;
+
+        try (Connection con = dataSource.createConnection()) {
+            stmt = con.prepareStatement("INSERT INTO task(task.task,"+ "task.list_id,task.chek)" +
+                    "VALUE ('" + task + "'," + "0" + ");");
+            stmt.execute();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+    return null;
     }
 }
-}
-*/
+

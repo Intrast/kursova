@@ -5,7 +5,10 @@ import xlist.models.Task;
 import java.util.List;
 
 public interface TaskDao {
-    List<Task> getTaskByTaskId(long id);
+   // List<Task> getTaskByTaskId(long id);
+   // Task getTaskById(long id);
 
-    Task getTaskById(long id);
+
+    Task  createTask(String task);
+
 }
