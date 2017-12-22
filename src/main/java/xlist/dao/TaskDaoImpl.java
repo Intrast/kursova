@@ -63,20 +63,33 @@ public class TaskDaoImpl implements TaskDao {
         return null;
     }*/
 
-@Override
-    public Task createTask(String task)
-    {
+    @Override
+    public Task createTask(String task, Long list_id) {
+        DataSource dataSource = new DataSource();
+        PreparedStatement stmt = null;
+        try (Connection con = dataSource.createConnection()) {
+            stmt = con.prepareStatement("INSERT INTO task(task.task,task.list_id," + "task.chek)" +
+                    "VALUE ('" + task + "','" + list_id + "'," + "0" + ");");
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Task deleteTask(Long list_id) {
         DataSource dataSource = new DataSource();
         PreparedStatement stmt = null;
 
         try (Connection con = dataSource.createConnection()) {
-            stmt = con.prepareStatement("INSERT INTO task(task.task,"+ "task.list_id,task.chek)" +
-                    "VALUE ('" + task + "'," + "0" + ");");
+            stmt = con.prepareStatement("DELETE FROM task WHERE  task.list_id=\"" + list_id + "\";");
             stmt.execute();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-    return null;
+        return null;
     }
 }
+
 

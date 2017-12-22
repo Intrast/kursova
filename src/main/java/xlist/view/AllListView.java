@@ -33,7 +33,7 @@ public class AllListView {
                 return "<div class=\"col-xs-12 col-md-4\" >\n" +
                         "<a href=\"/list/edit?id=" + l.getId()  + "\">" +
                         "<h4>" + (l.getNameList().length() > 20 ? l.getNameList().substring(0, 20) : l.getNameList())  + "</h4>\n" +
-                        "<p>" + (l.getComments().length() > 50 ? l.getComments().substring(0, 50) : l.getComments()) + "</p>\n" +
+                        "<p>" + (l.getComments().length() > 20 ? l.getComments().substring(0, 20) : l.getComments()) + "</p>\n" +
                         "</a></div>\n\n";
             }).collect(Collectors.joining(" "));
 

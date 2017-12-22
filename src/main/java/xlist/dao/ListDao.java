@@ -17,6 +17,7 @@ public interface ListDao {
 
 
         AllList createList(String name, String comment, Long user_id);
+        AllList deleteList(Long list_id);
     }
 
 

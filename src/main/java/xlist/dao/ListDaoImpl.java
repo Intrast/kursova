@@ -95,6 +95,21 @@ import java.util.List;
             return null;
         }
 
+        @Override
+        public AllList deleteList(Long list_id)
+        {
+            DataSource dataSource = new DataSource();
+            PreparedStatement stmt = null;
+
+            try (Connection con = dataSource.createConnection()) {
+                stmt = con.prepareStatement("DELETE FROM list WHERE  list.id=\"" + list_id + "\";");
+                stmt.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
 
     }
 

@@ -23,13 +23,11 @@ CREATE TABLE list
 
 CREATE TABLE task
 (
-  id INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  task    VARCHAR(150) NOT NULL,
-  list_id     INT(11)      NOT NULL,
-  chek        INT(1)        NOT NULL
+  id      INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  task    VARCHAR(150)        NOT NULL,
+  list_id INT(11)             NOT NULL,
+  chek    INT(1)              NOT NULL
 );
-
-
 
 INSERT INTO `users` (`email`, `password`, `name`, `date`, `role`)
 VALUES ("user1@ukr.net", "1111", "user1", "2017-11-28", 1);

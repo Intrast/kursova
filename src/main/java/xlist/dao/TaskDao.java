@@ -9,6 +9,6 @@ public interface TaskDao {
    // Task getTaskById(long id);
 
 
-    Task  createTask(String task);
-
+    Task  createTask(String task, Long list_id);
+    Task  deleteTask(Long list_id);
 }

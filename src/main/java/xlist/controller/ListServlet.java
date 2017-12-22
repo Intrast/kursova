@@ -25,24 +25,29 @@ import java.util.logging.Logger;
  */
 @WebServlet(name = "ListServlet", value = {"/list/*"})
 public class ListServlet extends HttpServlet {
+   private Long listId;
     private static Logger log = Logger.getLogger(ListServlet.class.getName());
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-
+        ListDaoImpl listDao = new ListDaoImpl();
+        TaskDaoImpl taskDao = new TaskDaoImpl();
         switch (request.getPathInfo()) {
-            case "/create":
-                ListDaoImpl listDao = new ListDaoImpl();
-                TaskDaoImpl taskDao = new TaskDaoImpl();
+            case "/createList":
                 String name = new String(request.getParameter("name").getBytes("iso-8859-1"),"UTF-8");
                 String comment = new String(request.getParameter("comments").getBytes("iso-8859-1"),"UTF-8");
-                String task = new String(request.getParameter("task").getBytes("iso-8859-1"),"UTF-8");
                 Long user_id = user.getId();
+
                 listDao.createList(name,comment,user_id);
-                taskDao.createTask(task);
                 response.sendRedirect("/list/all-list");
+                break;
+            case "/createTask":
+
+                String task = new String(request.getParameter("task").getBytes("iso-8859-1"),"UTF-8");
+                taskDao.createTask(task,listId);
+                response.sendRedirect("/list/edit?id="+listId);
                 break;
         }
 
@@ -56,12 +61,13 @@ public class ListServlet extends HttpServlet {
         User user = (User) session.getAttribute("user");
         ListDao listDao = new ListDaoImpl();
         AllListView listView = new AllListView();
+        TaskDaoImpl taskDao = new TaskDaoImpl();
         CreatedView createdView = new CreatedView();
 
 
         switch (request.getPathInfo()) {
             case "/all-list":
-                out.write("<a class=\"btn btn-default\" href=\"/list/create\" role=\"button\">Новий список</a>");
+                out.write("<a class=\"btn btn-default\" href=\"/list/createList\" role=\"button\">Новий список</a>");
                 List<AllList> list = listDao.getListByUserId(user.getId());
                 out.write("<H1>List Note!</H1>");
                 listView.outAllList(out, list);
@@ -71,11 +77,22 @@ public class ListServlet extends HttpServlet {
                 out.println("<button type=\"button\" class=\"btn btn-primary\">Підготовлена</button>");
                 break;
             case  "/edit":
+                out.print("<a class=\"btn btn-default\" href=\"/list/createTask\" role=\"button\">Додати завдання</a>");
+                out.print("<a class=\"btn btn-default\" href=\"/list/delete\" role=\"button\">Видалити cписок</a>");
                 AllList allList = listDao.getListsById(Long.parseLong(request.getParameter("id")));
+                listId = allList.getId();
                 listView.outList(out, allList);
                 break;
-            case "/create":
-                createdView.outCreated(out);
+            case "/createList":
+                createdView.outCreatedList(out);
+                break;
+            case "/createTask":
+                createdView.outCreatedTask(out);
+                break;
+            case "/delete":
+                taskDao.deleteTask(listId);
+                listDao.deleteList(listId);
+                response.sendRedirect("/list/all-list");
                 break;
         }
     }

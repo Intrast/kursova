@@ -1,6 +1,9 @@
 .btn-margin{
     margin: 0px 0px 5px 0px;
 }
+.btn-margin-left {
+    margin: 5px 5px 5px 5px;
+}
 .menu-position{
     margin: 50px 40px 30px 20px ;
 }
