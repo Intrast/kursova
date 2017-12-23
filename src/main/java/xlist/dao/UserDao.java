@@ -13,7 +13,6 @@ public interface UserDao {
      * @return class User or null
      */
     User findUserByEmail(String email);
+    User findUserByEmailAndPassword(String email, String password);
     User creatUser(String email,String password,String name);
-//    void deleteUserById(long id);
-//    void saveUser(User user);
 }

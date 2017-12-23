@@ -28,16 +28,9 @@ public class IndexView {
     public  void outMenu(PrintWriter out, HttpSession session){
         User user = (User) session.getAttribute("user");
         if(user == null) {
-            out.println(pathHtmlSingleton.getMenu());
+            out.print(pathHtmlSingleton.getMenu());
         } else {
-            String menu = pathHtmlSingleton.getMenu();
-            String logout = " <ul class=\"nav navbar-nav navbar-right\">\n" +
-                    "                <li><a class=\"btn btn-primary\" href=\"/user/logout\">" + "Logout " + user.getEmail() +
-                    "                </a></li>\n" +
-                    "         </ul>";
-
-            menu = menu.replace("<!--insert-logout-->", logout);
-            out.println(menu);
+            out.print(pathHtmlSingleton.getMenuLogin());
         }
     }
 
@@ -47,7 +40,7 @@ public class IndexView {
             out.write("<center><H2>Авторизація</H2></center>");
             out.write(pathHtmlSingleton.getLogin());
         } else {
-            out.println("<h2>Ви увійшли як  " + user.getName() + "</h2>");
+            out.println("<center><h2>Ви увійшли як  " + user.getName() + "</h2></center>");
         }
     }
 }

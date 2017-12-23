@@ -44,6 +44,34 @@ public class UserDaoImpl implements UserDao {
         return null;
     }
 
+    @Override
+    public User findUserByEmailAndPassword(String email, String password) {
+        //створює об'єкт для завантаження драйвера
+        DataSource dataSource = new DataSource();
+        //отримує зв'язок з БД
+        try (Connection con = dataSource.createConnection();
+             //створює об'єкт для виконання SQL запитів
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE users.email=\"" + email + "\" AND  users.password=\""+password+"\";");) {
+            if(rs.next()){
+                //створюємо об'єкт класу User на основі даних отриманих із БД
+                System.out.print(email);
+                User user = new User(
+                        rs.getLong("id"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("name"),
+                        rs.getString("date"),
+                        rs.getInt("role")
+                );
+                return user;
+            }
+
+        }  catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     @Override
     public User creatUser(String email, String password, String name) {

@@ -17,7 +17,7 @@ public class RegisterView {
             out.write("<center><H2>Реєстрація</H2></center>");
             out.print(pathHtmlSingleton.getRegistration());
         } else {
-            out.println("<h2>Ви зареєструвались як  " + user.getName() + "</h2>");
+            out.println("<center><h2>Ви зареєструвались як  " + user.getName() + "</h2></center>");
         }
     }
 }

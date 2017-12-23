@@ -21,7 +21,6 @@ public class IndexFilter implements Filter {
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         PathHtmlSingleton pathHtmlSingleton = PathHtmlSingleton.getInstance();
-//        System.out.println("Filter path\t" + pathHtmlSingleton.getPath());
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
 
@@ -43,9 +42,7 @@ public class IndexFilter implements Filter {
         IndexView indexView = new IndexView();
         indexView.outTopPage(out);
         indexView.outMenu(out, session);
-        //servlet
         chain.doFilter(request, response);
-        //низ html сторінки
         indexView.outBottomPage(out);
     }
 

@@ -7,3 +7,17 @@
 .menu-position{
     margin: 50px 40px 30px 20px ;
 }
+a:link{
+    color: #000000;
+}
+almost-batton:hover{
+    color: #010237;
+}
+.almost-batton
+
+.almost-batton:hover {
+    text-decoration: none;
+}
+.almost-batton:active {
+    text-decoration: none;
+}

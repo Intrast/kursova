@@ -40,10 +40,12 @@ public class StartServlet extends HttpServlet {
         }
         pathHTML.setTop("top.html");
         pathHTML.setMenu("menu.html");
+        pathHTML.setMenuLogin("menuLogin.html");
         pathHTML.setBottom("bottom.html");
         pathHTML.setRegistration("registration.html");
         pathHTML.setLogin("login.html");
-        System.out.println("Path\t" + pathHTML.getPath());
+        pathHTML.setCreateList("createList.html");
+        pathHTML.setCreateTask("createTask.html");
 
         try {
 

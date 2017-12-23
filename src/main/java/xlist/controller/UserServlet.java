@@ -1,7 +1,7 @@
 package xlist.controller;
 
-import xlist.dao.SharedNotesUserDao;
-import xlist.dao.SharedNotesUserDaoImpl;
+
+
 import xlist.dao.UserDaoImpl;
 import xlist.models.User;
 import xlist.view.PathHtmlSingleton;
@@ -50,17 +50,14 @@ public class UserServlet extends HttpServlet {
                 }
                 break;
             case "/login":
-                // перевіряє логін форму, якщо неправильно введені дані повертає форму для перезаповнення
                 email = request.getParameter("emailLogin");
                 password = request.getParameter("loginPassword");
-                user = userDao.findUserByEmail(email);
+                user = userDao.findUserByEmailAndPassword(email,password);
                 //якщо емейл є в БД, змінна user буде посилатись на об'єкт класу User, інакше дорівнюватиме null
                 if(user != null) {
                     //записав об'єкт користувача в сесію, щоб перевіряти в інших сервлетах чи зареєстрований користувач
                     session.setAttribute("user", user);
-                    out.println("<h1>hello зареєстрований користувач user</h1>");
                     }
-
                     response.sendRedirect("/");
                     break;
                 }
@@ -75,25 +72,12 @@ public class UserServlet extends HttpServlet {
         RegisterView registerView = new RegisterView();
 
         switch (request.getPathInfo()) {
-
-            case "/all-user":
-                //створюємо об'єкт для роботи із базою даних
-                SharedNotesUserDao sharedNotesUserDao = new SharedNotesUserDaoImpl();
-                //отримуємо список користувачів, що розділяють замітку із id=1
-                //обробляємо отриманий набір об'єктів класу User через агрегатні операції
-                String row = sharedNotesUserDao.getUsersByNoteId(1).stream()
-                        //для кожного об'єкту класу User створюємо новий об'єкт класу String
-                        .map(e -> "<p>" + e.toString() + "</p>")
-                        //об'єднуємо всі об'єкти класу String в один об'єкт
-                        .collect(Collectors.joining(" "));
-                //виводимо в браузер інформацію у вигляді HTML
-                //TODO вивід потрібно зробити в класах пакету view (вигляд)
-                out.write("<H1>AllList Users!</H1>");
-                out.println("<h3>" + row + "</h3>");
-                break;
-            // TODO ihorlt форму реєстрації
             case "/register":
                 registerView.outContentRegisterPage(out, session);
+                break;
+            case "/logout":
+                session.removeAttribute("user");
+                response.sendRedirect("/");
                 break;
         }
     }

@@ -21,10 +21,12 @@ public class PathHtmlSingleton {
      */
     private String top;
     private String menu;
+    private String menuLogin;
     private String registration;
     private String bottom;
     private String login;
-    private String create;
+    private String createList;
+    private String createTask;
 
     private static PathHtmlSingleton ourInstance = new PathHtmlSingleton();
 
@@ -45,12 +47,20 @@ public class PathHtmlSingleton {
         this.path = path;
     }
 
-    public String getCreate() {
-        return create;
+    public String getCreateList() {
+        return createList;
     }
 
-    public void setCreate(String create) {
-        this.create = getPartialHtml(create);
+    public void setCreateList(String createList) {
+        this.createList = getPartialHtml(createList);
+    }
+
+    public String getCreateTask() {
+        return createTask;
+    }
+
+    public void setCreateTask(String createTask) {
+        this.createTask = getPartialHtml(createTask);
     }
 
     public String getTop() {
@@ -67,6 +77,14 @@ public class PathHtmlSingleton {
 
     public void setMenu(String menu) {
         this.menu = getPartialHtml(menu);
+    }
+
+    public String getMenuLogin() {
+        return menuLogin;
+    }
+
+    public void setMenuLogin(String menuLogin) {
+        this.menuLogin = getPartialHtml(menuLogin);
     }
 
     public String getBottom() {

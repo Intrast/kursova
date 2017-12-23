@@ -5,6 +5,7 @@ import xlist.dao.ListDaoImpl;
 import xlist.dao.TaskDaoImpl;
 import xlist.dao.UserDaoImpl;
 import xlist.models.AllList;
+import xlist.models.Task;
 import xlist.models.User;
 import xlist.view.AllListView;
 import xlist.view.CreatedView;
@@ -69,19 +70,17 @@ public class ListServlet extends HttpServlet {
             case "/all-list":
                 out.write("<a class=\"btn btn-default\" href=\"/list/createList\" role=\"button\">Новий список</a>");
                 List<AllList> list = listDao.getListByUserId(user.getId());
-                out.write("<H1>List Note!</H1>");
                 listView.outAllList(out, list);
                 break;
-            case "/view-note":
-                out.write("<H1>Hello Note!</H1>");
-                out.println("<button type=\"button\" class=\"btn btn-primary\">Підготовлена</button>");
-                break;
             case  "/edit":
-                out.print("<a class=\"btn btn-default\" href=\"/list/createTask\" role=\"button\">Додати завдання</a>");
-                out.print("<a class=\"btn btn-default\" href=\"/list/delete\" role=\"button\">Видалити cписок</a>");
+               // out.print("<div class=\"col-lg-10 col-lg-offset-1\">");
+                out.print("<a class=\"btn btn-default\" href=\"/list/createTask\" role=\"button\">Додати завдання</a>" +
+                          "  <a class=\"btn btn-default \" href=\"/list/delete\" role=\"button\">Видалити cписок</a>");
+              //  out.print("</div>");
                 AllList allList = listDao.getListsById(Long.parseLong(request.getParameter("id")));
                 listId = allList.getId();
-                listView.outList(out, allList);
+                List<Task> task = taskDao.getTaskByListId(listId);
+                listView.outList(out, allList, task);
                 break;
             case "/createList":
                 createdView.outCreatedList(out);
